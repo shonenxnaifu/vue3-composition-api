@@ -1,21 +1,33 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div>Count: {{ nilai }}</div>
+  <button @click="add">Add</button>
+  <div>Result: {{ result }}</div>
+  <div>{{ temp }}</div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<script>
+import { ref, reactive, toRefs, computed } from 'vue'
+export default {
+  setup() {
+    let temp = ref('yoiii')
+    const counter = reactive({
+      nilai: 0
+    })
+
+    const addNum = ref(1)
+
+    const add = () => {
+      counter.nilai++
+    }
+
+    const result = computed(() => counter.nilai + addNum.value)
+
+    return {
+      ...toRefs(counter),
+      add,
+      result,
+      temp
+    }
+  }
 }
-</style>
+</script>
