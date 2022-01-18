@@ -2,12 +2,32 @@
   <div>Count: {{ nilai }}</div>
   <button @click="add">Add</button>
   <div>Result: {{ result }}</div>
+  <UserComponent :label="label" :user="user" class="active"  blablabla="testings" @submit="onSubmit">
+    <div>ini slot</div>
+    </UserComponent>
+  <button @click="changeName">Change</button>
 </template>
 
 <script>
-import { ref, reactive, toRefs, computed, watchEffect, watch } from 'vue'
+import { ref, reactive, toRefs, computed, watchEffect, watch,
+  onBeforeMount,
+  onMounted,
+  onBeforeUpdate,
+  onUpdated,
+  onBeforeUnmount,
+  onUnmounted,
+  onActivated,
+  onDeactivated,
+  onErrorCaptured} from 'vue'
+import UserComponent from "./components/UserComponent.vue"
 export default {
+  components: { UserComponent },
   setup() {
+    const label = ref("biodata")
+    const user = reactive({
+      name: "nusendra",
+      age: 25
+    })
     const counter = reactive({
       nilai: 0,
       foo: 'bar'
@@ -20,7 +40,7 @@ export default {
 
     const add = () => {
       result.value = 5
-      // counter.nilai++
+      counter.nilai++
       num1.value++
       num2.value++
     }
@@ -59,11 +79,22 @@ export default {
         console.log(num2.value)
       })
 
+    const changeName = () => {
+      user.name = "Admin"
+    }
+
+    const onSubmit = val => {
+      console.log(val)
+    }
 
     return {
       ...toRefs(counter),
       add,
-      result
+      result,
+      label,
+      user,
+      changeName,
+      onSubmit
     }
   }
 }
